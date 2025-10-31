@@ -1,4 +1,6 @@
 
+import { saveScoreToSupabase } from "./backend.js";
+
 document.addEventListener('DOMContentLoaded', function() {
   const privacyButton = document.getElementById('privacyButton');
   const infoWindow = document.getElementById('infoWindow');
@@ -196,14 +198,22 @@ document.getElementById('beginBtn').addEventListener('click', function() {
 });
 
 // handles checkAnswer event 
-document.getElementById('checkAnswersBtn').addEventListener('click', function() {
-    const continueButton = document.getElementById('continueToGameBtn');
-    const getAnswersButton = document.getElementById('checkAnswersBtn');
-    
+// Handles checkAnswers event
+document.getElementById('checkAnswersBtn').addEventListener('click', async function() {
+  const continueButton = document.getElementById('continueToGameBtn');
+  const getAnswersButton = document.getElementById('checkAnswersBtn');
 
+  // Example random scores
+  const score1 = Math.floor(Math.random() * 100);
+  const score2 = Math.floor(Math.random() * 100);
 
-    window.scrollTo({
-        top: 0, // Scrolls to the top of the page
-        behavior: 'smooth' // Provides a smooth scrolling animation
-    });
+  // Save scores (function from backend.js)
+  if (typeof saveScoreToSupabase === "function") {
+    await saveScoreToSupabase(score1, score2);
+  }
+
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
 });
